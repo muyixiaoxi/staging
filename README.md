@@ -31,9 +31,13 @@ public class ArticleManager extends AbstractPostsManager {
 实习的时候发现部门的项目架构挺好用，于是就偷学了下来。
 首先看一下项目结构
 > ├─dao         持久层 数据库操作（mysql、redis）
+> 
 > ├─logger      日志
+> 
 > ├─middleware  中间件
+> 
 > ├─model       定义的模型
+> 
 > ├─pkg         公共包
 > │  ├─jwt
 > │  ├─response
