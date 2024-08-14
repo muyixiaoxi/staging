@@ -39,10 +39,15 @@ public class ArticleManager extends AbstractPostsManager {
 > ├─model       定义的模型
 > 
 > ├─pkg         公共包
+> 
 > │  ├─jwt
+> 
 > │  ├─response
+> 
 > │  └─settings
+> 
 > ├─server      业务层
+> 
 > └─service     服务器层（等同于控制层）
 
 通过在 dao、server层定义结构体，在service上声明一个全局的对象，层层调用，以优化上面的问题。
