@@ -5,8 +5,12 @@
 
 **面向过程**
 代码开发便捷。频繁的通过**包名+方法名**调用可能会在不注意的时候出现跨层调用的问题（service/controller可以直接跨server层调用到dao），这是所不希望的。
+
+
 **面向对象**
 面向对象调用方法大幅的降低了跨层调用的问题。但是如果采用Java框架形式的完全面向对象。需要为每个.go文件都创建一个对象。在调用其他.go文件的方法时，还需要再创建一个对象才能引用。这是比较繁琐的。
+
+
 ~~~java
 public class ArticleManager extends AbstractPostsManager {
     @Resource
