@@ -2,7 +2,7 @@ package dao
 
 import (
 	"github.com/go-redis/redis/v8"
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 	"staging/pkg/settings"
 )
 
@@ -11,10 +11,14 @@ type Dao struct {
 	rdb *redis.Client
 }
 
-func Init(app *settings.AppConfig) *Dao {
+func Init(app *settings.AppConfig) (*Dao, error) {
+	db, err := initDB(app.MySQLConfig)
+	if err != nil {
+		return nil, err
+	}
 	dao := &Dao{
-		db:  initDB(app.MySQLConfig),
+		db:  db,
 		rdb: initRDB(app.RedisConfig),
 	}
-	return dao
+	return dao, nil
 }

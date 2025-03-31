@@ -1,20 +1,33 @@
 package server
 
 import (
-	"golang.org/x/sync/singleflight"
-	"staging/dao"
+	"github.com/gin-gonic/gin"
 	"staging/pkg/settings"
+	"staging/service"
+	"strconv"
 )
 
-type Server struct {
-	dao    *dao.Dao
-	single *singleflight.Group
+var (
+	svc *service.Service
+)
+
+func initRouter() *gin.Engine {
+	// 创建一个默认的路由引擎
+	r := gin.Default()
+	// todo 注册使用的中间件
+	//r.Use(logger.GinLogger(), logger.GinRecovery(true))
+	return r
 }
 
-func InitServer(app *settings.AppConfig) *Server {
-	svc := &Server{
-		dao:    dao.Init(app),
-		single: new(singleflight.Group),
+func Init(app *settings.AppConfig) {
+	s, err := service.InitServer(app)
+	if err != nil {
+		return
 	}
-	return svc
+	svc = s
+
+	router := initRouter()
+	router.GET("/test", test)
+
+	router.Run(":" + strconv.Itoa(app.Port))
 }

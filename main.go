@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"staging/logger"
 	"staging/pkg/settings"
-	"staging/service"
+	"staging/server"
 )
 
 func main() {
@@ -19,5 +19,5 @@ func main() {
 	if err != nil {
 		fmt.Printf("init logger failed,error: %v\n", err)
 	}
-	service.Init(app)
+	server.Init(app)
 }

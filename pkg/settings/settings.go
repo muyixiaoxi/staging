@@ -8,9 +8,8 @@ import (
 )
 
 type AppConfig struct {
-	Mode string `mapstructure:"mode"`
-	Port int    `mapstructure:"port"`
-
+	Mode         string `mapstructure:"mode"`
+	Port         int    `mapstructure:"port"`
 	*LogConfig   `mapstructure:"log"`
 	*MySQLConfig `mapstructure:"mysql"`
 	*RedisConfig `mapstructure:"redis"`

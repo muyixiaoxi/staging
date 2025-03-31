@@ -1,27 +1,24 @@
 package service
 
 import (
-	"github.com/gin-gonic/gin"
-	"staging/logger"
+	"golang.org/x/sync/singleflight"
+	"staging/dao"
 	"staging/pkg/settings"
-	"staging/server"
-	"strconv"
 )
 
-var svc *server.Server
-
-func initRouter() *gin.Engine {
-	// 创建一个默认的路由引擎
-	r := gin.Default()
-	// todo 注册使用的中间件
-	r.Use(logger.GinLogger(), logger.GinRecovery(true))
-	return r
+type Service struct {
+	dao    *dao.Dao
+	single *singleflight.Group
 }
 
-func Init(app *settings.AppConfig) {
-	svc = server.InitServer(app)
-	router := initRouter()
-	router.GET("/test", test)
-
-	router.Run(":" + strconv.Itoa(app.Port))
+func InitServer(app *settings.AppConfig) (*Service, error) {
+	dao, err := dao.Init(app)
+	if err != nil {
+		return nil, err
+	}
+	svc := &Service{
+		dao:    dao,
+		single: new(singleflight.Group),
+	}
+	return svc, nil
 }
