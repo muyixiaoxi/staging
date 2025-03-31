@@ -46,9 +46,9 @@ public class ArticleManager extends AbstractPostsManager {
 > 
 > │  └─settings
 > 
-> ├─server      业务层
+> ├─service      业务层
 > 
-> └─service     服务器层（等同于控制层）
+> └─server     服务器层（等同于控制层）
 
 通过在 dao、server层定义结构体，在service上声明一个全局的对象，层层调用，以优化上面的问题。
 注意：结构体属性都是**私有**
@@ -59,15 +59,15 @@ type Dao struct {
 	rdb *redis.Client
 }
 
-// server
-type Server struct {
+// service
+type Service struct {
 	dao    *dao.Dao
 	single *singleflight.Group
 	// kafka...
 }
 
-// service
-var svc server.Server   
+// server
+var svc service.Service   
 ~~~
 
 后续的调用都通过这个svc实现，具体的实现请看项目中的测试用例
